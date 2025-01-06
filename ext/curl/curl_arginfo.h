@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 778f1aa4a9333ef419c89276911333bc8a04a065 */
+ * Stub hash: 27c75f7f2bb150067a387c1697a10e623fd88d5c */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_curl_close, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, handle, CurlHandle, 0)
@@ -133,6 +133,10 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_curl_share_strerror arginfo_curl_multi_strerror
 
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_curl_share_init_persistent, 0, 1, CurlSharePersistentHandle, 0)
+	ZEND_ARG_TYPE_INFO(0, share_options, IS_ARRAY, 0)
+ZEND_END_ARG_INFO()
+
 #define arginfo_curl_strerror arginfo_curl_multi_strerror
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_curl_version, 0, 0, MAY_BE_ARRAY|MAY_BE_FALSE)
@@ -172,6 +176,7 @@ ZEND_FUNCTION(curl_share_errno);
 ZEND_FUNCTION(curl_share_init);
 ZEND_FUNCTION(curl_share_setopt);
 ZEND_FUNCTION(curl_share_strerror);
+ZEND_FUNCTION(curl_share_init_persistent);
 ZEND_FUNCTION(curl_strerror);
 ZEND_FUNCTION(curl_version);
 
@@ -210,6 +215,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(curl_share_init, arginfo_curl_share_init)
 	ZEND_FE(curl_share_setopt, arginfo_curl_share_setopt)
 	ZEND_FE(curl_share_strerror, arginfo_curl_share_strerror)
+	ZEND_FE(curl_share_init_persistent, arginfo_curl_share_init_persistent)
 	ZEND_FE(curl_strerror, arginfo_curl_strerror)
 	ZEND_FE(curl_version, arginfo_curl_version)
 	ZEND_FE_END
@@ -227,6 +233,11 @@ static const zend_function_entry class_CurlMultiHandle_methods[] = {
 
 
 static const zend_function_entry class_CurlShareHandle_methods[] = {
+	ZEND_FE_END
+};
+
+
+static const zend_function_entry class_CurlSharePersistentHandle_methods[] = {
 	ZEND_FE_END
 };
 
@@ -1328,6 +1339,23 @@ static zend_class_entry *register_class_CurlShareHandle(void)
 	INIT_CLASS_ENTRY(ce, "CurlShareHandle", class_CurlShareHandle_methods);
 	class_entry = zend_register_internal_class_ex(&ce, NULL);
 	class_entry->ce_flags |= ZEND_ACC_FINAL|ZEND_ACC_NO_DYNAMIC_PROPERTIES|ZEND_ACC_NOT_SERIALIZABLE;
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_CurlSharePersistentHandle(void)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "CurlSharePersistentHandle", class_CurlSharePersistentHandle_methods);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL|ZEND_ACC_NO_DYNAMIC_PROPERTIES|ZEND_ACC_NOT_SERIALIZABLE;
+
+	zval property_options_default_value;
+	ZVAL_UNDEF(&property_options_default_value);
+	zend_string *property_options_name = zend_string_init("options", sizeof("options") - 1, 1);
+	zend_declare_typed_property(class_entry, property_options_name, &property_options_default_value, ZEND_ACC_PUBLIC|ZEND_ACC_READONLY, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_ARRAY));
+	zend_string_release(property_options_name);
 
 	return class_entry;
 }
