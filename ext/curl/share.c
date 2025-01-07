@@ -329,7 +329,6 @@ static zend_function *curl_share_persistent_get_constructor(zend_object *object)
 
 void curl_share_persistent_register_handlers(void) {
 	curl_share_persistent_ce->create_object = curl_share_create_object;
-	curl_share_persistent_ce->default_object_handlers = &curl_share_persistent_handlers;
 
 	memcpy(&curl_share_persistent_handlers, &std_object_handlers, sizeof(zend_object_handlers));
 	curl_share_persistent_handlers.offset = XtOffsetOf(php_curlsh, std);
